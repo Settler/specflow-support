@@ -12,9 +12,11 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         {
             return new[]
                    {
+                       "Feature",
                        "Функционал",
                        "Предыстория",
                        "Сценарий",
+                       "Scenario",
                        "Структура сценария",
                        "Примеры",
                        "Допустим",
@@ -37,10 +39,12 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
             switch (keyword)
             {
                 case "Функционал":
+                case "Feature":
                     return GherkinTokenTypes.FEATURE_KEYWORD;
                 case "Предыстория":
                     return GherkinTokenTypes.BACKGROUND_KEYWORD;
                 case "Сценарий":
+                case "Scenario":
                     return GherkinTokenTypes.SCENARIO_KEYWORD;
                 case "Структура сценария":
                     return GherkinTokenTypes.SCENARIO_OUTLINE_KEYWORD;

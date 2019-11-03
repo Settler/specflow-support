@@ -1,37 +1,48 @@
-using JetBrains.Diagnostics;
-using JetBrains.Rd.Impl;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
+// ReSharper disable InconsistentNaming
 
 namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
 {
     public static class GherkinNodeTypes
     {
-        public static GherkinNodeType FILE = new GherkinFileNodeType("FILE", 3001);
-        public static GherkinNodeType TAG = new GherkinTagNodeType("TAG", 3002);
+        private static int _lastNodeId = 3000;
+        private static int NextId => ++_lastNodeId;
+        
+        public static readonly GherkinNodeType FILE = new GherkinFileNodeType("FILE", NextId);
+        public static readonly GherkinNodeType TAG = new GherkinTagNodeType("TAG", NextId);
+        public static readonly GherkinNodeType FEATURE_HEADER = new GherkinFeatureHeaderNodeType("FEATURE_HEADER", NextId);
+        public static readonly GherkinNodeType FEATURE = new GherkinFeatureNodeType("FEATURE", NextId);
 
-        class GherkinFileNodeType : GherkinNodeType
+        private class GherkinFileNodeType : GherkinNodeType
         {
             public GherkinFileNodeType(string name, int index) : base(name, index)
             {
             }
 
-            public override CompositeElement Create()
+            public override CompositeElement Create(object userData)
             {
-                return new GherkinFile();
+                return new GherkinFile((string) userData);
             }
         }
         
-        class GherkinTagNodeType : GherkinNodeType
+        private class GherkinTagNodeType : GherkinNodeType<GherkinTag>
         {
             public GherkinTagNodeType(string name, int index) : base(name, index)
             {
             }
-
-            public override CompositeElement Create()
+        }
+        
+        private class GherkinFeatureNodeType : GherkinNodeType<GherkinFeature>
+        {
+            public GherkinFeatureNodeType(string name, int index) : base(name, index)
             {
-                Protocol.TraceLogger.Log(LoggingLevel.INFO, $"Created tag element");
-
-                return new GherkinTag();
+            }
+        }
+        
+        private class GherkinFeatureHeaderNodeType : GherkinNodeType<GherkinFeatureHeader>
+        {
+            public GherkinFeatureHeaderNodeType(string name, int index) : base(name, index)
+            {
             }
         }
         
