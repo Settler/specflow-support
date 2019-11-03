@@ -12,6 +12,8 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Tests
         [TestCase("Features")]
         [TestCase("Simple")]
         [TestCase("Pystring")]
+        [TestCase("Background")]
+        [TestCase("BackgroundAfterScenario")]
         public void TestParser(string name) { DoOneTest(name); }
     }
 }

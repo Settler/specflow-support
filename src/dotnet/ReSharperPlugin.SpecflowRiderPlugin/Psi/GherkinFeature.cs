@@ -12,8 +12,8 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
 
         public override string ToString()
         {
-            var featureNameToken = FindDescendant<GherkinToken>(o => o.NodeType == GherkinTokenTypes.TEXT);
-            return $"GherkinFeature: {featureNameToken?.GetText()}";
+            var textToken = this.FindChild<GherkinToken>(o => o.NodeType == GherkinTokenTypes.TEXT);
+            return $"GherkinFeature: {textToken?.GetText()}";
         }
     }
 }

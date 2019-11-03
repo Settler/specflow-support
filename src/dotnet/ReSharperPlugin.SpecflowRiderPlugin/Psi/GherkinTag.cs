@@ -9,5 +9,11 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public GherkinTag() : base(GherkinNodeTypes.TAG)
         {
         }
+        
+        public override string ToString()
+        {
+            var textToken = this.FindChild<GherkinToken>(o => o.NodeType == GherkinTokenTypes.TEXT);
+            return $"GherkinTag: {textToken?.GetText()}";
+        }
     }
 }
