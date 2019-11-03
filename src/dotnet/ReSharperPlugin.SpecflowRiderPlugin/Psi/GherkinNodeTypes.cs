@@ -16,6 +16,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public static readonly GherkinNodeType SCENARIO_OUTLINE = new GherkinScenarioOutlineNodeType("SCENARIO_OUTLINE", NextId);
         public static readonly GherkinNodeType STEP = new GherkinStepNodeType("STEP", NextId);
         public static readonly GherkinNodeType STEP_PARAMETER = new GherkinStepParameterNodeType("STEP_PARAMETER", NextId);
+        public static readonly GherkinNodeType PYSTRING = new GherkinPystringNodeType("PYSTRING", NextId);
 
         private class GherkinFileNodeType : GherkinNodeType
         {
@@ -74,6 +75,13 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         private class GherkinStepParameterNodeType : GherkinNodeType<GherkinStepParameter>
         {
             public GherkinStepParameterNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinPystringNodeType : GherkinNodeType<GherkinPystring>
+        {
+            public GherkinPystringNodeType(string name, int index) : base(name, index)
             {
             }
         }

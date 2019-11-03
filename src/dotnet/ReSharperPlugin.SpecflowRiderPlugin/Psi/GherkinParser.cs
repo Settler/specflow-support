@@ -189,13 +189,37 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                     builder.AdvanceLexer();
             }
 
-//            var tokenTypeAfterName = builder.GetTokenType();
-//            if (tokenTypeAfterName == GherkinTokenTypes.PIPE)
-//                parseTable(builder);
-//            else if (tokenTypeAfterName == GherkinTokenTypes.PYSTRING)
-//                parsePystring(builder);
+            var tokenTypeAfterName = builder.GetTokenType();
+            if (tokenTypeAfterName == GherkinTokenTypes.PIPE)
+                ParseTable(builder);
+            else if (tokenTypeAfterName == GherkinTokenTypes.PYSTRING)
+                ParsePystring(builder);
 
             builder.Done(marker, GherkinNodeTypes.STEP, null);
+        }
+
+        private static void ParseTable(PsiBuilder builder)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private static void ParsePystring(PsiBuilder builder)
+        {
+            if (!builder.Eof())
+            {
+                var marker = builder.Mark();
+                builder.AdvanceLexer();
+                while (!builder.Eof() && builder.GetTokenType() != GherkinTokenTypes.PYSTRING)
+                {
+                    if (!ParseStepParameter(builder))
+                        builder.AdvanceLexer();
+                }
+
+                if (!builder.Eof())
+                    builder.AdvanceLexer();
+
+                builder.Done(marker, GherkinNodeTypes.PYSTRING, null);
+            }
         }
 
         private static bool ParseStepParameter(PsiBuilder builder)
