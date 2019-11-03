@@ -223,6 +223,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
             int? cellMarker = null;
 
             var wasLineBreak = false;
+            var possibleEmptyCell = false;
             while (builder.GetTokenType() == GherkinTokenTypes.PIPE ||
                    builder.GetTokenType() == GherkinTokenTypes.TABLE_CELL ||
                    builder.GetTokenType() == GherkinTokenTypes.WHITE_SPACE)
@@ -236,12 +237,29 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 {
                     builder.Done(cellMarker.Value, GherkinNodeTypes.TABLE_CELL, null);
                     cellMarker = null;
+                    possibleEmptyCell = false;
                 }
-                else if (tokenType == GherkinTokenTypes.PIPE && wasLineBreak)
+                
+                if (tokenType == GherkinTokenTypes.PIPE)
                 {
-                    builder.Done(rowMarker, headerNodeType, null);
-                    headerNodeType = GherkinNodeTypes.TABLE_ROW;
-                    rowMarker = builder.Mark();
+                    if (wasLineBreak)
+                    {
+                        possibleEmptyCell = true;
+                        builder.Done(rowMarker, headerNodeType, null);
+                        headerNodeType = GherkinNodeTypes.TABLE_ROW;
+                        rowMarker = builder.Mark();
+                    }
+                    else
+                    {
+                        if (possibleEmptyCell)
+                        {
+                            cellMarker = builder.Mark();
+                            builder.Done(cellMarker.Value, GherkinNodeTypes.TABLE_CELL, null);
+                            cellMarker = null;
+                        }
+
+                        possibleEmptyCell = true;
+                    }
                 }
 
                 wasLineBreak = IsLineBreak(builder);

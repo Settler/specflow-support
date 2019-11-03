@@ -17,7 +17,7 @@ GherkinFile: ScenarioOutline.feature
         GherkinToken(71,9): TEXT('there are')
         GherkinToken(80,1): WHITE_SPACE(' ')
         GherkinToken(81,1): STEP_PARAMETER_BRACE('<')
-        GherkinStepParameter: 
+        GherkinStepParameter: start
           GherkinToken(82,5): STEP_PARAMETER_TEXT('start')
         GherkinToken(87,1): STEP_PARAMETER_BRACE('>')
         GherkinToken(88,1): WHITE_SPACE(' ')
