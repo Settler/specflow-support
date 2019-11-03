@@ -20,6 +20,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                        "Scenario",
                        "Структура сценария",
                        "Примеры",
+                       "Examples",
                        "Допустим",
                        "Пусть",
                        "Дано",

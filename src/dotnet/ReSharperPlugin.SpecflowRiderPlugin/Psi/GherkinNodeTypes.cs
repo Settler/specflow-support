@@ -17,6 +17,11 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public static readonly GherkinNodeType STEP = new GherkinStepNodeType("STEP", NextId);
         public static readonly GherkinNodeType STEP_PARAMETER = new GherkinStepParameterNodeType("STEP_PARAMETER", NextId);
         public static readonly GherkinNodeType PYSTRING = new GherkinPystringNodeType("PYSTRING", NextId);
+        public static readonly GherkinNodeType EXAMPLES_BLOCK = new GherkinExamplesBlockNodeType("EXAMPLES_BLOCK", NextId);
+        public static readonly GherkinNodeType TABLE_CELL = new GherkinTableCellNodeType("TABLE_CELL", NextId);
+        public static readonly GherkinNodeType TABLE_HEADER_ROW = new GherkinTableHeaderRowNodeType("TABLE_HEADER_ROW", NextId);
+        public static readonly GherkinNodeType TABLE_ROW = new GherkinTableRowNodeType("TABLE_ROW", NextId);
+        public static readonly GherkinNodeType TABLE = new GherkinTableNodeType("TABLE", NextId);
 
         private class GherkinFileNodeType : GherkinNodeType
         {
@@ -82,6 +87,41 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         private class GherkinPystringNodeType : GherkinNodeType<GherkinPystring>
         {
             public GherkinPystringNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinExamplesBlockNodeType : GherkinNodeType<GherkinExamplesBlock>
+        {
+            public GherkinExamplesBlockNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinTableCellNodeType : GherkinNodeType<GherkinTableCell>
+        {
+            public GherkinTableCellNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinTableHeaderRowNodeType : GherkinNodeType<GherkinTableHeaderRow>
+        {
+            public GherkinTableHeaderRowNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinTableRowNodeType : GherkinNodeType<GherkinTableRow>
+        {
+            public GherkinTableRowNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinTableNodeType : GherkinNodeType<GherkinTable>
+        {
+            public GherkinTableNodeType(string name, int index) : base(name, index)
             {
             }
         }
