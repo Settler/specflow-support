@@ -1,21 +1,19 @@
-using System.Text;
 using JetBrains.Diagnostics;
 using JetBrains.Lifetimes;
-using JetBrains.Rd.Impl;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Parsing;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.TreeBuilder;
-using JetBrains.Text;
 using JetBrains.Util;
 
 namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
 {
     public class GherkinParser : IParser
     {
-        private static NodeTypeSet SCENARIO_END_TOKENS = new NodeTypeSet(
+        // ReSharper disable once InconsistentNaming
+        private static readonly NodeTypeSet SCENARIO_END_TOKENS = new NodeTypeSet(
             GherkinTokenTypes.BACKGROUND_KEYWORD,
             GherkinTokenTypes.SCENARIO_KEYWORD,
             GherkinTokenTypes.SCENARIO_OUTLINE_KEYWORD,
@@ -44,7 +42,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 if (tokenType == GherkinTokenTypes.FEATURE_KEYWORD)
                     ParseFeature();
                 else if (tokenType == GherkinTokenTypes.TAG)
-                    ParseTags();
+                    ParseTags(_builder);
                 else
                     _builder.AdvanceLexer();
             }
@@ -55,13 +53,13 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
             return resultTree;
         }
 
-        private void ParseTags()
+        private static void ParseTags(PsiBuilder builder)
         {
-            while (_builder.GetTokenType() == GherkinTokenTypes.TAG)
+            while (builder.GetTokenType() == GherkinTokenTypes.TAG)
             {
-                var tagMarker = _builder.Mark();
-                _builder.AdvanceLexer();
-                _builder.Done(tagMarker, GherkinNodeTypes.TAG, null);
+                var tagMarker = builder.Mark();
+                builder.AdvanceLexer();
+                builder.Done(tagMarker, GherkinNodeTypes.TAG, null);
             }
         }
 
@@ -127,20 +125,97 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
 //                    }
 //                }
 //
-//                final PsiBuilder.Marker marker = builder.mark();
-//                // tags
-//                parseTags(builder);
+                var marker = builder.Mark();
+                // tags
+                ParseTags(builder);
 
                 // scenarios
-//                IElementType startTokenType = builder.getTokenType();
-//                final boolean outline = startTokenType == SCENARIO_OUTLINE_KEYWORD;
+                var startTokenType = builder.GetTokenType();
+                var outline = startTokenType == GherkinTokenTypes.SCENARIO_OUTLINE_KEYWORD;
                 builder.AdvanceLexer();
-//                parseScenario(builder);
-//                marker.done(outline ? GherkinElementTypes.SCENARIO_OUTLINE : GherkinElementTypes.SCENARIO);
+                ParseScenario(builder);
+                builder.Done(marker, outline ? GherkinNodeTypes.SCENARIO_OUTLINE : GherkinNodeTypes.SCENARIO, null);
             }
 //            if (ruleMarker != null) {
 //                ruleMarker.done(RULE);
 //            }
+        }
+
+        private static void ParseScenario(PsiBuilder builder)
+        {
+            while (!AtScenarioEnd(builder))
+            {
+                if (builder.GetTokenType() == GherkinTokenTypes.TAG)
+                {
+                    var marker = builder.Mark();
+                    ParseTags(builder);
+                    if (AtScenarioEnd(builder))
+                    {
+                        builder.RollbackTo(marker);
+                        break;
+                    }
+
+                    builder.Drop(marker);
+                }
+
+                if (ParseStepParameter(builder))
+                    continue;
+
+                if (builder.GetTokenType() == GherkinTokenTypes.STEP_KEYWORD)
+                    ParseStep(builder);
+//                else if (builder.GetTokenType() == GherkinTokenTypes.EXAMPLES_KEYWORD)
+//                    parseExamplesBlock(builder);
+                else
+                    builder.AdvanceLexer();
+            }
+        }
+
+        private static void ParseStep(PsiBuilder builder)
+        {
+            var marker = builder.Mark();
+            builder.AdvanceLexer();
+            var prevTokenEnd = -1;
+            while (builder.GetTokenType() == GherkinTokenTypes.TEXT ||
+                   builder.GetTokenType() == GherkinTokenTypes.STEP_PARAMETER_BRACE ||
+                   builder.GetTokenType() == GherkinTokenTypes.STEP_PARAMETER_TEXT ||
+                   builder.GetTokenType() == GherkinTokenTypes.WHITE_SPACE)
+            {
+                var tokenText = builder.GetTokenText();
+                if (HadLineBreakBefore(builder, prevTokenEnd))
+                    break;
+
+                prevTokenEnd = builder.GetTokenOffset() + GetTokenLength(tokenText);
+                if (!ParseStepParameter(builder))
+                    builder.AdvanceLexer();
+            }
+
+//            var tokenTypeAfterName = builder.GetTokenType();
+//            if (tokenTypeAfterName == GherkinTokenTypes.PIPE)
+//                parseTable(builder);
+//            else if (tokenTypeAfterName == GherkinTokenTypes.PYSTRING)
+//                parsePystring(builder);
+
+            builder.Done(marker, GherkinNodeTypes.STEP, null);
+        }
+
+        private static bool ParseStepParameter(PsiBuilder builder)
+        {
+            if (builder.GetTokenType() != GherkinTokenTypes.STEP_PARAMETER_TEXT)
+                return false;
+
+            var stepParameterMarker = builder.Mark();
+            builder.AdvanceLexer();
+            builder.Done(stepParameterMarker, GherkinNodeTypes.STEP_PARAMETER, null);
+            return true;
+        }
+
+        private static bool AtScenarioEnd(PsiBuilder builder) {
+            int i = 0;
+            while (builder.GetTokenType(i) == GherkinTokenTypes.TAG) {
+                i++;
+            }
+            var tokenType = builder.GetTokenType(i);
+            return tokenType == null || SCENARIO_END_TOKENS[tokenType];
         }
 
         private static int GetTokenLength(string tokenText) {

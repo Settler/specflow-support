@@ -10,6 +10,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Tests
         protected override string RelativeTestDataPath => "Parsing";
         
         [TestCase("Features")]
+        [TestCase("Simple")]
         public void TestParser(string name) { DoOneTest(name); }
     }
 }

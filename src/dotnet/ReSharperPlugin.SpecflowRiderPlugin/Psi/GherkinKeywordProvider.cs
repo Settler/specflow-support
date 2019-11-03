@@ -22,9 +22,11 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                        "Допустим",
                        "Пусть",
                        "Дано",
+                       "Given",
                        "Когда",
                        "Тогда",
                        "И",
+                       "And",
                        "Также"
                    };
         }
@@ -53,9 +55,11 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 case "Допустим":
                 case "Пусть":
                 case "Дано":
+                case "Given":
                 case "Когда":
                 case "Тогда":
                 case "И":
+                case "And":
                 case "Также":
                     return GherkinTokenTypes.STEP_KEYWORD;
                 

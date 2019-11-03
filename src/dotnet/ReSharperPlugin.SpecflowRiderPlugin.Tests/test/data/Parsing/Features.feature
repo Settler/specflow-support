@@ -5,4 +5,4 @@ Feature Second feature name
   Multiline 
   Description
 
-Feature Third feature name
+Feature: Third feature name

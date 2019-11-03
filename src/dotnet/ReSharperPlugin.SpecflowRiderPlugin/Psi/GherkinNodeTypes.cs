@@ -12,6 +12,10 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public static readonly GherkinNodeType TAG = new GherkinTagNodeType("TAG", NextId);
         public static readonly GherkinNodeType FEATURE_HEADER = new GherkinFeatureHeaderNodeType("FEATURE_HEADER", NextId);
         public static readonly GherkinNodeType FEATURE = new GherkinFeatureNodeType("FEATURE", NextId);
+        public static readonly GherkinNodeType SCENARIO = new GherkinScenarioNodeType("SCENARIO", NextId);
+        public static readonly GherkinNodeType SCENARIO_OUTLINE = new GherkinScenarioOutlineNodeType("SCENARIO_OUTLINE", NextId);
+        public static readonly GherkinNodeType STEP = new GherkinStepNodeType("STEP", NextId);
+        public static readonly GherkinNodeType STEP_PARAMETER = new GherkinStepParameterNodeType("STEP_PARAMETER", NextId);
 
         private class GherkinFileNodeType : GherkinNodeType
         {
@@ -42,6 +46,34 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         private class GherkinFeatureHeaderNodeType : GherkinNodeType<GherkinFeatureHeader>
         {
             public GherkinFeatureHeaderNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinScenarioNodeType : GherkinNodeType<GherkinScenario>
+        {
+            public GherkinScenarioNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinScenarioOutlineNodeType : GherkinNodeType<GherkinScenarioOutline>
+        {
+            public GherkinScenarioOutlineNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinStepNodeType : GherkinNodeType<GherkinStep>
+        {
+            public GherkinStepNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinStepParameterNodeType : GherkinNodeType<GherkinStepParameter>
+        {
+            public GherkinStepParameterNodeType(string name, int index) : base(name, index)
             {
             }
         }

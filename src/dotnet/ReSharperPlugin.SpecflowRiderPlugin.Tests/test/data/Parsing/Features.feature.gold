@@ -17,6 +17,7 @@ GherkinFile: Features.feature
       GherkinToken(90,4): WHITE_SPACE('\n\n')
   GherkinFeature: Third feature name
     GherkinToken(94,7): FEATURE_KEYWORD('Feature')
-    GherkinToken(101,1): WHITE_SPACE(' ')
-    GherkinToken(102,18): TEXT('Third feature name')
+    GherkinToken(101,1): COLON(':')
+    GherkinToken(102,1): WHITE_SPACE(' ')
+    GherkinToken(103,18): TEXT('Third feature name')
 
