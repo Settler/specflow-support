@@ -33,12 +33,12 @@ GherkinFile: ScenarioOutlineTable.feature
           GherkinTableHeaderRow
             GherkinToken(163,1): PIPE('|')
             GherkinToken(164,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: start
               GherkinToken(165,5): TABLE_CELL('start')
             GherkinToken(170,1): WHITE_SPACE(' ')
             GherkinToken(171,1): PIPE('|')
             GherkinToken(172,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: total
               GherkinToken(173,5): TABLE_CELL('total')
             GherkinToken(178,2): WHITE_SPACE('  ')
             GherkinToken(180,1): PIPE('|')
@@ -46,12 +46,12 @@ GherkinFile: ScenarioOutlineTable.feature
           GherkinTableRow
             GherkinToken(189,1): PIPE('|')
             GherkinToken(190,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: 12
               GherkinToken(191,2): TABLE_CELL('12')
             GherkinToken(193,4): WHITE_SPACE('    ')
             GherkinToken(197,1): PIPE('|')
             GherkinToken(198,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: 13  56
               GherkinToken(199,6): TABLE_CELL('13  56')
             GherkinToken(205,1): WHITE_SPACE(' ')
             GherkinToken(206,1): PIPE('|')
@@ -59,12 +59,12 @@ GherkinFile: ScenarioOutlineTable.feature
           GherkinTableRow
             GherkinToken(215,1): PIPE('|')
             GherkinToken(216,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: 20
               GherkinToken(217,2): TABLE_CELL('20')
             GherkinToken(219,4): WHITE_SPACE('    ')
             GherkinToken(223,1): PIPE('|')
             GherkinToken(224,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: 20
               GherkinToken(225,2): TABLE_CELL('20')
             GherkinToken(227,5): WHITE_SPACE('     ')
             GherkinToken(232,1): PIPE('|')
@@ -72,10 +72,10 @@ GherkinFile: ScenarioOutlineTable.feature
           GherkinTableRow
             GherkinToken(241,1): PIPE('|')
             GherkinToken(242,7): WHITE_SPACE('       ')
-            GherkinTableCell
+            GherkinTableCell: 
             GherkinToken(249,1): PIPE('|')
             GherkinToken(250,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: 1
               GherkinToken(251,1): TABLE_CELL('1')
             GherkinToken(252,6): WHITE_SPACE('      ')
             GherkinToken(258,1): PIPE('|')
@@ -83,9 +83,9 @@ GherkinFile: ScenarioOutlineTable.feature
           GherkinTableRow
             GherkinToken(267,1): PIPE('|')
             GherkinToken(268,7): WHITE_SPACE('       ')
-            GherkinTableCell
+            GherkinTableCell: 
             GherkinToken(275,1): PIPE('|')
             GherkinToken(276,8): WHITE_SPACE('        ')
-            GherkinTableCell
+            GherkinTableCell: 
             GherkinToken(284,1): PIPE('|')
 

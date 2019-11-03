@@ -33,7 +33,7 @@ GherkinFile: ScenarioOutline.feature
           GherkinTableHeaderRow
             GherkinToken(128,1): PIPE('|')
             GherkinToken(129,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: start
               GherkinToken(130,5): TABLE_CELL('start')
             GherkinToken(135,2): WHITE_SPACE('  ')
             GherkinToken(137,1): PIPE('|')
@@ -41,7 +41,7 @@ GherkinFile: ScenarioOutline.feature
           GherkinTableRow
             GherkinToken(146,1): PIPE('|')
             GherkinToken(147,2): WHITE_SPACE('  ')
-            GherkinTableCell
+            GherkinTableCell: 12 23
               GherkinToken(149,5): TABLE_CELL('12 23')
             GherkinToken(154,1): WHITE_SPACE(' ')
             GherkinToken(155,1): PIPE('|')
@@ -49,7 +49,7 @@ GherkinFile: ScenarioOutline.feature
           GherkinTableRow
             GherkinToken(164,1): PIPE('|')
             GherkinToken(165,2): WHITE_SPACE('  ')
-            GherkinTableCell
+            GherkinTableCell: 20
               GherkinToken(167,2): TABLE_CELL('20')
             GherkinToken(169,4): WHITE_SPACE('    ')
             GherkinToken(173,1): PIPE('|')
@@ -64,7 +64,7 @@ GherkinFile: ScenarioOutline.feature
           GherkinTableHeaderRow
             GherkinToken(203,1): PIPE('|')
             GherkinToken(204,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: start
               GherkinToken(205,5): TABLE_CELL('start')
             GherkinToken(210,1): WHITE_SPACE(' ')
             GherkinToken(211,1): PIPE('|')
@@ -72,7 +72,7 @@ GherkinFile: ScenarioOutline.feature
           GherkinTableRow
             GherkinToken(220,1): PIPE('|')
             GherkinToken(221,1): WHITE_SPACE(' ')
-            GherkinTableCell
+            GherkinTableCell: 15
               GherkinToken(222,2): TABLE_CELL('15')
             GherkinToken(224,1): WHITE_SPACE(' ')
             GherkinToken(225,1): PIPE('|')
