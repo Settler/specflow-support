@@ -22,6 +22,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public static readonly GherkinNodeType TABLE_HEADER_ROW = new GherkinTableHeaderRowNodeType("TABLE_HEADER_ROW", NextId);
         public static readonly GherkinNodeType TABLE_ROW = new GherkinTableRowNodeType("TABLE_ROW", NextId);
         public static readonly GherkinNodeType TABLE = new GherkinTableNodeType("TABLE", NextId);
+        public static readonly GherkinNodeType RULE = new GherkinRuleNodeType("RULE", NextId);
 
         private class GherkinFileNodeType : GherkinNodeType
         {
@@ -122,6 +123,13 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         private class GherkinTableNodeType : GherkinNodeType<GherkinTable>
         {
             public GherkinTableNodeType(string name, int index) : base(name, index)
+            {
+            }
+        }
+        
+        private class GherkinRuleNodeType : GherkinNodeType<GherkinRule>
+        {
+            public GherkinRuleNodeType(string name, int index) : base(name, index)
             {
             }
         }

@@ -19,7 +19,7 @@ GherkinFile: Simple.feature
         GherkinToken(62,5): STEP_KEYWORD('Given')
         GherkinToken(67,1): WHITE_SPACE(' ')
         GherkinToken(68,9): TEXT('something')
-        GherkinToken(77,6): WHITE_SPACE('\n    ')
+      GherkinToken(77,6): WHITE_SPACE('\n    ')
       GherkinStep: something else
         GherkinToken(83,3): STEP_KEYWORD('And')
         GherkinToken(86,1): WHITE_SPACE(' ')

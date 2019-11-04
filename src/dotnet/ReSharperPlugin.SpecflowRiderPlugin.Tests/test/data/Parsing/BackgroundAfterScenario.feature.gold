@@ -16,7 +16,7 @@ GherkinFile: BackgroundAfterScenario.feature
         GherkinToken(68,4): STEP_KEYWORD('When')
         GherkinToken(72,1): WHITE_SPACE(' ')
         GherkinToken(73,21): TEXT('I am on the root page')
-        GherkinToken(94,6): WHITE_SPACE('\n\n  ')
+      GherkinToken(94,6): WHITE_SPACE('\n\n  ')
     GherkinScenario(Background):
       GherkinToken(100,10): BACKGROUND_KEYWORD('Background')
       GherkinToken(110,1): COLON(':')

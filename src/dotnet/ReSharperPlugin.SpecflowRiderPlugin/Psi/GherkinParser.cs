@@ -5,7 +5,6 @@ using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
 using JetBrains.ReSharper.Psi.Parsing;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.TreeBuilder;
-using JetBrains.Util;
 
 namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
 {
@@ -67,9 +66,8 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
             Assertion.Assert(_builder.GetTokenType() == GherkinTokenTypes.FEATURE_KEYWORD,
                 "_builder.GetTokenType() == GherkinTokenTypes.FEATURE_KEYWORD");
 
-            int featureEnd = _builder.GetTokenOffset() + GetTokenLength(_builder.GetTokenText());
-
             int? descMarker = null;
+            bool wasLineBreak = false;
             do
             {
                 _builder.AdvanceLexer();
@@ -77,7 +75,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 var tokenType = _builder.GetTokenType();
                 if (tokenType == GherkinTokenTypes.TEXT && descMarker == null)
                 {
-                    if (HadLineBreakBefore(_builder, featureEnd))
+                    if (wasLineBreak)
                         descMarker = _builder.Mark();
                 }
 
@@ -94,6 +92,8 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
 
                     ParseFeatureElements(_builder);
                 }
+
+                wasLineBreak = IsLineBreak(_builder);
             } while (_builder.GetTokenType() != GherkinTokenTypes.FEATURE_KEYWORD && !_builder.Eof());
 
             if (descMarker != null)
@@ -104,26 +104,25 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
 
         private static void ParseFeatureElements(PsiBuilder builder)
         {
-//            PsiBuilder.Marker ruleMarker = null;
+            int? ruleMarker = null;
             while (builder.GetTokenType() != GherkinTokenTypes.FEATURE_KEYWORD && !builder.Eof())
             {
-//                if (builder.getTokenType() == RULE_KEYWORD) {
-//                    if (ruleMarker != null) {
-//                        ruleMarker.done(RULE);
-//                    }
-//                    ruleMarker = builder.mark();
-//                    builder.advanceLexer();
-//                    if (builder.getTokenType() == COLON) {
-//                        builder.advanceLexer();
-//                    } else {
-//                        break;
-//                    }
-//
-//                    while (builder.getTokenType() == TEXT) {
-//                        builder.advanceLexer();
-//                    }
-//                }
-//
+                if (builder.GetTokenType() == GherkinTokenTypes.RULE_KEYWORD)
+                {
+                    if (ruleMarker != null)
+                        builder.Done(ruleMarker.Value, GherkinNodeTypes.RULE, null);
+
+                    ruleMarker = builder.Mark();
+                    builder.AdvanceLexer();
+                    if (builder.GetTokenType() == GherkinTokenTypes.COLON)
+                        builder.AdvanceLexer();
+                    else
+                        break;
+
+                    while (builder.GetTokenType() == GherkinTokenTypes.TEXT || builder.GetTokenType() == GherkinTokenTypes.WHITE_SPACE)
+                        builder.AdvanceLexer();
+                }
+
                 var marker = builder.Mark();
                 // tags
                 ParseTags(builder);
@@ -136,9 +135,8 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 builder.Done(marker, outline ? GherkinNodeTypes.SCENARIO_OUTLINE : GherkinNodeTypes.SCENARIO, null);
             }
 
-//            if (ruleMarker != null) {
-//                ruleMarker.done(RULE);
-//            }
+            if (ruleMarker.HasValue)
+                builder.Done(ruleMarker.Value, GherkinNodeTypes.RULE, null);
         }
 
         private static void ParseScenario(PsiBuilder builder)
@@ -174,26 +172,29 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         {
             var marker = builder.Mark();
             builder.AdvanceLexer();
-            var prevTokenEnd = -1;
             while (builder.GetTokenType() == GherkinTokenTypes.TEXT ||
                    builder.GetTokenType() == GherkinTokenTypes.STEP_PARAMETER_BRACE ||
                    builder.GetTokenType() == GherkinTokenTypes.STEP_PARAMETER_TEXT ||
                    builder.GetTokenType() == GherkinTokenTypes.WHITE_SPACE)
             {
-                var tokenText = builder.GetTokenText();
-                if (HadLineBreakBefore(builder, prevTokenEnd))
-                    break;
-
-                prevTokenEnd = builder.GetTokenOffset() + GetTokenLength(tokenText);
                 if (!ParseStepParameter(builder))
                     builder.AdvanceLexer();
+
+                if (IsLineBreak(builder))
+                    break;
             }
 
-            var tokenTypeAfterName = builder.GetTokenType();
-            if (tokenTypeAfterName == GherkinTokenTypes.PIPE)
+            var nextToken = builder.GetTokenType(1);
+            if (nextToken == GherkinTokenTypes.PIPE)
+            {
+                builder.AdvanceLexer();
                 ParseTable(builder);
-            else if (tokenTypeAfterName == GherkinTokenTypes.PYSTRING)
+            }
+            else if (nextToken == GherkinTokenTypes.PYSTRING)
+            {
+                builder.AdvanceLexer();
                 ParsePystring(builder);
+            }
 
             builder.Done(marker, GherkinNodeTypes.STEP, null);
         }
@@ -313,27 +314,11 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
             return tokenType == null || SCENARIO_END_TOKENS[tokenType];
         }
 
-        private static int GetTokenLength(string tokenText)
-        {
-            return tokenText?.Length ?? 0;
-        }
-
-        private static bool HadLineBreakBefore(PsiBuilder builder, int prevTokenEnd)
-        {
-            if (prevTokenEnd < 0)
-                return false;
-
-            var possibleLineBreakRange = new TextRange(prevTokenEnd, builder.GetTokenOffset());
-            var possibleLineBreakText = builder.GetBuffer().GetText(possibleLineBreakRange);
-            var lineBreakIndex = possibleLineBreakText.IndexOf('\n');
-            if (lineBreakIndex != -1)
-                return true;
-
-            return false;
-        }
-
         private static bool IsLineBreak(PsiBuilder builder)
         {
+            if (builder.GetTokenType() != GherkinTokenTypes.WHITE_SPACE)
+                return false;
+            
             return builder.GetTokenText()?.Contains("\n") == true;
         }
     }

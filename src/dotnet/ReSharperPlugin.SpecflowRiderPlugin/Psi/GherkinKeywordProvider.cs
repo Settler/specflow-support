@@ -21,7 +21,9 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                        "Структура сценария",
                        "Scenario Outline",
                        "Примеры",
+                       "Rule",
                        "Examples",
+                       "Example",
                        "Допустим",
                        "Пусть",
                        "Дано",
@@ -53,6 +55,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                     return GherkinTokenTypes.BACKGROUND_KEYWORD;
                 case "Сценарий":
                 case "Scenario":
+                case "Example":
                     return GherkinTokenTypes.SCENARIO_KEYWORD;
                 case "Структура сценария":
                 case "Scenario Outline":
@@ -72,6 +75,8 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 case "And":
                 case "Также":
                     return GherkinTokenTypes.STEP_KEYWORD;
+                case "Rule":
+                    return GherkinTokenTypes.RULE_KEYWORD;
                 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(keyword), keyword);

@@ -23,7 +23,7 @@ GherkinFile: ScenarioOutlineTable.feature
         GherkinToken(89,1): STEP_PARAMETER_BRACE('>')
         GherkinToken(90,1): WHITE_SPACE(' ')
         GherkinToken(91,9): TEXT('cucumbers')
-        GherkinToken(100,6): WHITE_SPACE('\n    ')
+      GherkinToken(100,6): WHITE_SPACE('\n    ')
       GherkinStep: there are cucumbers
         GherkinToken(106,4): STEP_KEYWORD('Then')
         GherkinToken(110,1): WHITE_SPACE(' ')
@@ -35,7 +35,7 @@ GherkinFile: ScenarioOutlineTable.feature
         GherkinToken(127,1): STEP_PARAMETER_BRACE('>')
         GherkinToken(128,1): WHITE_SPACE(' ')
         GherkinToken(129,9): TEXT('cucumbers')
-        GherkinToken(138,8): WHITE_SPACE('\n\n    ')
+      GherkinToken(138,8): WHITE_SPACE('\n\n    ')
       GherkinExamplesBlock
         GherkinToken(146,8): EXAMPLES_KEYWORD('Examples')
         GherkinToken(154,1): COLON(':')

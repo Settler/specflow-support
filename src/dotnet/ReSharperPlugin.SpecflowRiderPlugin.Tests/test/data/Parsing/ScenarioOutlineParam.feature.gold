@@ -23,12 +23,12 @@ GherkinFile: ScenarioOutlineParam.feature
         GherkinToken(71,5): STEP_KEYWORD('Given')
         GherkinToken(76,1): WHITE_SPACE(' ')
         GherkinToken(77,22): TEXT('I am on Antivirus page')
-        GherkinToken(99,6): WHITE_SPACE('\n    ')
+      GherkinToken(99,6): WHITE_SPACE('\n    ')
       GherkinStep: I go to other scans section
         GherkinToken(105,4): STEP_KEYWORD('When')
         GherkinToken(109,2): WHITE_SPACE('  ')
         GherkinToken(111,27): TEXT('I go to other scans section')
-        GherkinToken(138,6): WHITE_SPACE('\n    ')
+      GherkinToken(138,6): WHITE_SPACE('\n    ')
       GherkinStep: Open Scan settings
         GherkinToken(144,3): STEP_KEYWORD('And')
         GherkinToken(147,1): WHITE_SPACE(' ')
@@ -40,7 +40,7 @@ GherkinFile: ScenarioOutlineParam.feature
         GherkinToken(158,1): STEP_PARAMETER_BRACE('>')
         GherkinToken(159,1): WHITE_SPACE(' ')
         GherkinToken(160,13): TEXT('Scan settings')
-        GherkinToken(173,6): WHITE_SPACE('\n    ')
+      GherkinToken(173,6): WHITE_SPACE('\n    ')
       GherkinStep: I can see Scan settings window
         GherkinToken(179,4): STEP_KEYWORD('Then')
         GherkinToken(183,1): WHITE_SPACE(' ')
@@ -52,7 +52,7 @@ GherkinFile: ScenarioOutlineParam.feature
         GherkinToken(199,1): STEP_PARAMETER_BRACE('>')
         GherkinToken(200,1): WHITE_SPACE(' ')
         GherkinToken(201,20): TEXT('Scan settings window')
-        GherkinToken(221,6): WHITE_SPACE('\n    ')
+      GherkinToken(221,6): WHITE_SPACE('\n    ')
       GherkinExamplesBlock
         GherkinToken(227,8): EXAMPLES_KEYWORD('Examples')
         GherkinToken(235,1): COLON(':')

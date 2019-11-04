@@ -18,6 +18,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Tests
         [TestCase("ScenarioOutlineTable")]
         [TestCase("ScenarioOutlineParam")]
         [TestCase("ScenarioOutlineTableWithTags")]
+        [TestCase("Rule")]
         public void TestParser(string name) { DoOneTest(name); }
     }
 }

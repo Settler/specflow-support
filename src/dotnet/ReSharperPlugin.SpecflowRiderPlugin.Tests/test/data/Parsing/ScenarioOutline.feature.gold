@@ -23,7 +23,7 @@ GherkinFile: ScenarioOutline.feature
         GherkinToken(87,1): STEP_PARAMETER_BRACE('>')
         GherkinToken(88,1): WHITE_SPACE(' ')
         GherkinToken(89,9): TEXT('cucumbers')
-        GherkinToken(98,8): WHITE_SPACE('\n\n    ')
+      GherkinToken(98,8): WHITE_SPACE('\n\n    ')
       GherkinExamplesBlock: Good
         GherkinToken(106,8): EXAMPLES_KEYWORD('Examples')
         GherkinToken(114,1): COLON(':')
