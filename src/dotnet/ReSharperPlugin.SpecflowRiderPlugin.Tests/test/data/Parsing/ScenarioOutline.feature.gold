@@ -6,12 +6,13 @@ GherkinFile: ScenarioOutline.feature
     GherkinToken(8,1): WHITE_SPACE(' ')
     GherkinToken(9,22): TEXT('Cucumber stock keeping')
     GherkinToken(31,4): WHITE_SPACE('\n  ')
-    GherkinScenario: Outline: eating
-      GherkinToken(35,8): SCENARIO_KEYWORD('Scenario')
-      GherkinToken(43,1): WHITE_SPACE(' ')
-      GherkinToken(44,15): TEXT('Outline: eating')
+    GherkinScenarioOutline: eating
+      GherkinToken(35,16): SCENARIO_OUTLINE_KEYWORD('Scenario Outline')
+      GherkinToken(51,1): COLON(':')
+      GherkinToken(52,1): WHITE_SPACE(' ')
+      GherkinToken(53,6): TEXT('eating')
       GherkinToken(59,6): WHITE_SPACE('\n    ')
-      GherkinStep: there are
+      GherkinStep: there are cucumbers
         GherkinToken(65,5): STEP_KEYWORD('Given')
         GherkinToken(70,1): WHITE_SPACE(' ')
         GherkinToken(71,9): TEXT('there are')

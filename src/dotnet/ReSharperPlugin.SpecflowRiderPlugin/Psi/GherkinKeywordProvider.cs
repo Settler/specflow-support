@@ -19,6 +19,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                        "Сценарий",
                        "Scenario",
                        "Структура сценария",
+                       "Scenario Outline",
                        "Примеры",
                        "Examples",
                        "Допустим",
@@ -26,7 +27,9 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                        "Дано",
                        "Given",
                        "Когда",
+                       "When",
                        "Тогда",
+                       "Then",
                        "И",
                        "And",
                        "Также"
@@ -52,7 +55,7 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 case "Scenario":
                     return GherkinTokenTypes.SCENARIO_KEYWORD;
                 case "Структура сценария":
-                case "Scenario outline":
+                case "Scenario Outline":
                     return GherkinTokenTypes.SCENARIO_OUTLINE_KEYWORD;
                 case "Примеры":
                 case "Examples":
@@ -62,7 +65,9 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 case "Дано":
                 case "Given":
                 case "Когда":
+                case "When":
                 case "Тогда":
+                case "Then":
                 case "И":
                 case "And":
                 case "Также":

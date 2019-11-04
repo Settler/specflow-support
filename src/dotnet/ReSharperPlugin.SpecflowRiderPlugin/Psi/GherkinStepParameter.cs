@@ -5,11 +5,11 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public GherkinStepParameter() : base(GherkinNodeTypes.STEP_PARAMETER)
         {
         }
-        
-        public override string ToString()
+
+        protected override string GetPresentableText()
         {
             var textToken = this.FindChild<GherkinToken>(o => o.NodeType == GherkinTokenTypes.STEP_PARAMETER_TEXT);
-            return $"GherkinStepParameter: {textToken?.GetText()}";
+            return textToken?.GetText();
         }
     }
 }

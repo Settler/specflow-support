@@ -5,11 +5,11 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public GherkinTableCell() : base(GherkinNodeTypes.TABLE_CELL)
         {
         }
-        
-        public override string ToString()
+
+        protected override string GetPresentableText()
         {
             var textToken = this.FindChild<GherkinToken>(o => o.NodeType == GherkinTokenTypes.TABLE_CELL);
-            return $"GherkinTableCell: {textToken?.GetText()}";
+            return textToken?.GetText();
         }
     }
 }

@@ -1,6 +1,6 @@
 Language: PsiLanguageType:GHERKIN
 GherkinFile: Background.feature
-  GherkinFeature: 
+  GherkinFeature
     GherkinToken(0,7): FEATURE_KEYWORD('Feature')
     GherkinToken(7,1): COLON(':')
     GherkinToken(8,4): WHITE_SPACE('\n  ')

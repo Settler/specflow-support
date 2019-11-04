@@ -9,11 +9,5 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public GherkinFeature() : base(GherkinNodeTypes.FEATURE)
         {
         }
-
-        public override string ToString()
-        {
-            var textToken = this.FindChild<GherkinToken>(o => o.NodeType == GherkinTokenTypes.TEXT);
-            return $"GherkinFeature: {textToken?.GetText()}";
-        }
     }
 }

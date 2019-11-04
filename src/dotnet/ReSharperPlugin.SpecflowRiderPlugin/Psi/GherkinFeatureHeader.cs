@@ -9,5 +9,10 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         public GherkinFeatureHeader() : base(GherkinNodeTypes.FEATURE_HEADER)
         {
         }
+
+        protected override string GetPresentableText()
+        {
+            return string.Empty;
+        }
     }
 }
