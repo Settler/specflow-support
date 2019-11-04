@@ -19,6 +19,17 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Tests
         [TestCase("ScenarioOutlineParam")]
         [TestCase("ScenarioOutlineTableWithTags")]
         [TestCase("Rule")]
+        [TestCase("MultilineArgs")]
+        [TestCase("MultilineFeatureDescription")]
+        [TestCase("MultilineScenarioName")]
+        [TestCase("NoSteps")]
+        [TestCase("NotAStep")]
+        [TestCase("Ruby14051")]
+        [TestCase("Ruby8793")]
+        [TestCase("ScenarioWithExamples")]
+        [TestCase("StepParam")]
+        [TestCase("TagBeforeExamples")]
+        [TestCase("WithoutFeatureKeyword")]
         public void TestParser(string name) { DoOneTest(name); }
     }
 }
