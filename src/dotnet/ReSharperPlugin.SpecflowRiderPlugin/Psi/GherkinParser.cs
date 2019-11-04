@@ -110,55 +110,56 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
             int? ruleMarker = null;
             while (builder.GetTokenType() != GherkinTokenTypes.FEATURE_KEYWORD && !builder.Eof())
             {
-                if (builder.GetTokenType() == GherkinTokenTypes.RULE_KEYWORD)
+                if (builder.GetTokenType() == GherkinTokenTypes.WHITE_SPACE)
                 {
-                    if (ruleMarker != null)
-                        builder.Done(ruleMarker.Value, GherkinNodeTypes.RULE, null);
-
-                    ruleMarker = builder.Mark();
                     builder.AdvanceLexer();
-                    if (builder.GetTokenType() == GherkinTokenTypes.COLON)
-                        builder.AdvanceLexer();
-                    else
-                        break;
-
-                    while (builder.GetTokenType() == GherkinTokenTypes.TEXT || builder.GetTokenType() == GherkinTokenTypes.WHITE_SPACE)
-                        builder.AdvanceLexer();
+                    continue;
                 }
-
-                var marker = builder.Mark();
-                // tags
-                ParseTags(builder);
-
-                // scenarios
-                var startTokenType = builder.GetTokenType();
-                var outline = startTokenType == GherkinTokenTypes.SCENARIO_OUTLINE_KEYWORD;
-                builder.AdvanceLexer();
+                
+                ruleMarker = ParseRule(builder, ruleMarker);
                 ParseScenario(builder);
-                builder.Done(marker, outline ? GherkinNodeTypes.SCENARIO_OUTLINE : GherkinNodeTypes.SCENARIO, null);
             }
 
             if (ruleMarker.HasValue)
                 builder.Done(ruleMarker.Value, GherkinNodeTypes.RULE, null);
         }
 
+        private static int? ParseRule(PsiBuilder builder, int? ruleMarker)
+        {
+            if (builder.GetTokenType() == GherkinTokenTypes.RULE_KEYWORD)
+            {
+                if (ruleMarker != null)
+                    builder.Done(ruleMarker.Value, GherkinNodeTypes.RULE, null);
+
+                ruleMarker = builder.Mark();
+                builder.AdvanceLexer();
+                if (builder.GetTokenType() == GherkinTokenTypes.COLON)
+                    builder.AdvanceLexer();
+                else
+                    return ruleMarker;
+
+                while (builder.GetTokenType() == GherkinTokenTypes.TEXT ||
+                       builder.GetTokenType() == GherkinTokenTypes.WHITE_SPACE)
+                    builder.AdvanceLexer();
+            }
+
+            return ruleMarker;
+        }
+
         private static void ParseScenario(PsiBuilder builder)
         {
+            var scenarioMarker = builder.Mark();
+            ParseTags(builder);
+
+            // scenarios
+            var startTokenType = builder.GetTokenType();
+            var outline = startTokenType == GherkinTokenTypes.SCENARIO_OUTLINE_KEYWORD;
+            builder.AdvanceLexer();
+
             while (!AtScenarioEnd(builder))
             {
-                if (builder.GetTokenType() == GherkinTokenTypes.TAG)
-                {
-                    var marker = builder.Mark();
-                    ParseTags(builder);
-                    if (AtScenarioEnd(builder))
-                    {
-                        builder.RollbackTo(marker);
-                        break;
-                    }
-
-                    builder.Drop(marker);
-                }
-
+                ParseTags(builder);
+                
                 if (ParseStepParameter(builder))
                     continue;
 
@@ -169,6 +170,8 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
                 else
                     builder.AdvanceLexer();
             }
+            
+            builder.Done(scenarioMarker, outline ? GherkinNodeTypes.SCENARIO_OUTLINE : GherkinNodeTypes.SCENARIO, null);
         }
 
         private static void ParseStep(PsiBuilder builder)
@@ -310,7 +313,8 @@ namespace ReSharperPlugin.SpecflowRiderPlugin.Psi
         private static bool AtScenarioEnd(PsiBuilder builder)
         {
             var i = 0;
-            while (builder.GetTokenType(i) == GherkinTokenTypes.TAG)
+            while (builder.GetTokenType(i) == GherkinTokenTypes.TAG ||
+                   builder.GetTokenType(i) == GherkinTokenTypes.WHITE_SPACE)
                 i++;
 
             var tokenType = builder.GetTokenType(i);

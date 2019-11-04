@@ -14,7 +14,7 @@ GherkinFile: Rule.feature
         GherkinToken(43,5): STEP_KEYWORD('Given')
         GherkinToken(48,1): WHITE_SPACE(' ')
         GherkinToken(49,16): TEXT('a sample project')
-      GherkinToken(65,6): WHITE_SPACE('\n\n  ')
+    GherkinToken(65,6): WHITE_SPACE('\n\n  ')
     GherkinRule: the first rule in the project
       GherkinToken(71,4): RULE_KEYWORD('Rule')
       GherkinToken(75,1): COLON(':')
@@ -36,7 +36,7 @@ GherkinFile: Rule.feature
           GherkinToken(182,3): STEP_KEYWORD('And')
           GherkinToken(185,1): WHITE_SPACE(' ')
           GherkinToken(186,8): TEXT('step two')
-        GherkinToken(194,8): WHITE_SPACE('\n\n    ')
+      GherkinToken(194,8): WHITE_SPACE('\n\n    ')
       GherkinScenario: the second example in the Rule
         GherkinToken(202,7): SCENARIO_KEYWORD('Example')
         GherkinToken(209,1): COLON(':')

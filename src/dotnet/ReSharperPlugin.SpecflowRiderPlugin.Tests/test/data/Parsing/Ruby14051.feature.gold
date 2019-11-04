@@ -29,7 +29,7 @@ GherkinFile: Ruby14051.feature
       GherkinToken(73,4): WHITE_SPACE('\n  ')
       GherkinStep
         GherkinToken(77,4): STEP_KEYWORD('Then')
-      GherkinToken(81,8): WHITE_SPACE('\n\n\n  ')
+    GherkinToken(81,8): WHITE_SPACE('\n\n\n  ')
     GherkinScenario: scenario 2.
       GherkinTag: @s
         GherkinToken(89,2): TAG('@s')
@@ -53,5 +53,5 @@ GherkinFile: Ruby14051.feature
       GherkinToken(141,4): WHITE_SPACE('\n  ')
       GherkinStep
         GherkinToken(145,4): STEP_KEYWORD('Then')
-      GherkinToken(149,6): WHITE_SPACE('\n    ')
+    GherkinToken(149,6): WHITE_SPACE('\n    ')
 
